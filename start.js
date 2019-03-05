@@ -1,13 +1,43 @@
 let no = 25;
+
+
+
 let players = [];
 let list = [];	
-let guy = 0;	
+let guy = 0;
+let playerNum;
+let play;
+let canvas;	
 
 function setup(){
 
-	let count = 0;
-	createCanvas(400, 400);
+	no = Math.floor(Math.random() * 30) + 1; 
+	
+	playerNum = createInput('enter number of players').position((windowWidth - 150)/2, 75);
+	play = createButton('Play').position((windowWidth - 40) / 2, 100);
+	play.mousePressed(input)
+	canvas = createCanvas(400, 400);
+
+	
+  	let x = (windowWidth - width) / 2;
+  	let y = (windowHeight - height) / 2;
+  	canvas.position(x, y);
+
+
 	frameRate(5);
+
+	//setGame();
+	noLoop();
+	
+}
+
+function input(){
+	setGame();
+	loop();
+}
+
+function setGame(){
+	let count = 0;
 
 	for(let a = 0; a < TWO_PI; a+= TWO_PI/no){
 
@@ -16,11 +46,11 @@ function setup(){
 		let y = r * sin(a - PI/2);
         
         let offset = 30;
-        let nox = (r - offset)* cos(a - PI/2);
-		let noy = (r - offset)* sin(a - PI/2);
+        let noX = (r - offset)* cos(a - PI/2);
+		let noY = (r - offset)* sin(a - PI/2);
         
-		players[count] = new Man(x,y,nox,noy,count);
-		list[count] = count; //push?
+		players[count] = new Man(x,y,noX,noY,count);
+		list[count] = count; 
 		count++;	
 	}
 	players[0].hasSword = true;
