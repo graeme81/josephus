@@ -1,8 +1,8 @@
-function Man(x,y,nox,noy,player){
+function Man(x, y, numX, numY, player){
     this.x = x;
     this.y = y;
-    this.nox = nox;
-    this.noy = noy;
+    this.numX = numX;
+    this.numY = numY;
     this.player = player;
     this.alive = true;
     this.hasSword = false; 
@@ -29,8 +29,8 @@ Man.prototype.show = function(){
         fill(color(255,0,0));
     }
     ellipse(man.x,man.y,20,20);
-    let num = this.player+1;
+    let num = this.player + 1;
     fill(255);
-    text(num, this.nox, this.noy);
+    text(num, this.numX, this.numY);
 
 }
