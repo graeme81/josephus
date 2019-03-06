@@ -21,7 +21,7 @@ Man.prototype.passSword = function(num){
 }
 
 Man.prototype.show = function(){
-    if(man.hasSword){
+    if(man.hasSword){               // if statement picking status colour (alive, dead, sword carrier) 
         fill(color(0,0,255));
     }else if(man.alive){
         fill(color(0,255,0));

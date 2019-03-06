@@ -1,10 +1,10 @@
-let no;
-let players;
-let list;
-let guy = 0;
-let playerNum;
-let play;
-let canvas;	
+let no;      		// number of players
+let players;		// array of all the players (men)
+let list;			// array of undead players
+let guy = 0;		// variable for cycling through the list array of players
+let playerNum;		// Input box where number of players entered 
+let play;			// play button
+let canvas;			
 
 function setup(){
 	
@@ -33,11 +33,11 @@ function draw(){
 		
 		let next = list.indexOf(players[num].player)+1;
 		
-		if (next >= list.length) next = 0;
-			players[num].killNext(next);
+		if (next >= list.length) next = 0;  //cycle back to start of the circle
+		players[num].killNext(next);
 
-		if (next >= list.length) next = 0;
-			players[num].passSword(next);
+		if (next >= list.length) next = 0;  //cycle back to start of the circle
+		players[num].passSword(next);
 	}
 
 	if(guy >= list.length-1){
@@ -70,10 +70,8 @@ function playButtonPressed(){
 
 	no  = parseInt(playerNum.value());
 	if(isNaN(no)){
-		console.log("Input is bad");
 		setInputs();
 	}else{
-		console.log("Input is good");
 		setGame();
 		loop();
 	}
@@ -100,6 +98,8 @@ function setGame(){
 	}
 	players[0].hasSword = true;
 
+	// sometimes an extra player is created due to circle maths
+	// culling extra player
 	if (players.length > no){
 		players.pop();
 		list.pop();
