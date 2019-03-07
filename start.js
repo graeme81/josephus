@@ -59,6 +59,10 @@ function draw(){
 	}
 }
 
+function windowResized(){ // this might make it work in future
+	playButtonPressed();
+}
+
 function setInputs(){
 	no = 0;
 	playerNum = createInput("Enter number of players!").position((windowWidth - 150)/2, 100);  // input box
