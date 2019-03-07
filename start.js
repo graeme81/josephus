@@ -13,8 +13,8 @@ function setup(){
 	canvas = createCanvas(400, 400);
 	
   	let x = (windowWidth - width) / 2;
-  	let y = (windowHeight - height) / 2;
-  	canvas.position(x, y);
+  	let y = (windowHeight - height) / 2 ;
+  	canvas.position(x, y+25);
 
 	frameRate(5);
 	noLoop();
@@ -61,18 +61,20 @@ function draw(){
 
 function setInputs(){
 	no = 0;
-	playerNum = createInput("Enter number of players!").position((windowWidth - 150)/2, 75);
-	play = createButton('Play').position((windowWidth - 40) / 2, 100);
+	playerNum = createInput("Enter number of players!").position((windowWidth - 150)/2, 100);  // input box
+	play = createButton('Play').position((windowWidth - 40) / 2, 125);						  // play button
+
 	play.mousePressed(playButtonPressed);
+
 }
 
-function playButtonPressed(){
+function playButtonPressed(){  // making sure the input is valid
 
 	no  = parseInt(playerNum.value());
 	if(isNaN(no)){
-		setInputs();
+		setInputs();   // reInput
 	}else{
-		setGame();
+		setGame();		// start animation
 		loop();
 	}
 }
