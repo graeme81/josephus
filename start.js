@@ -4,70 +4,70 @@ let list;			// array of undead players
 let guy = 0;		// variable for cycling through the list array of players
 let playerNum;		// Input box where number of players entered 
 let play;			// play button
-let canvas;			
+let canvas;
+let tick = 0;			
 
 function setup(){
 	
 	setInputs();
 
 	canvas = createCanvas(400, 400);
-	
   	let x = (windowWidth - width) / 2;
-  	let y = (windowHeight - height) / 2 ;
-  	canvas.position(x, y+25);
+  	canvas.position(x, 150);
 
 	frameRate(5);
 	noLoop();
 }
 
 function draw(){
-	
-	background(0);
-	stroke(0);
-	fill(255);
-	text(no + " Josephus players.", (width/2)-50, height/2);
 
-	let num = list[guy];
-	
-	if (players[num].hasSword){
+		background(0);
+		stroke(0);
+		fill(255);
+		text(no + " Josephus players.", (width/2)-50, height/2);
+
+	if(tick > 0){ //only run what is after once the loop has been initiated
+
+		let num = list[guy];
 		
-		let next = list.indexOf(players[num].player)+1;
-		
-		if (next >= list.length) next = 0;  //cycle back to start of the circle
-		players[num].killNext(next);
+		if (players[num].hasSword){
+			
+			let next = list.indexOf(players[num].player)+1;
+			
+			if (next >= list.length) next = 0;  //cycle back to start of the circle
+			players[num].killNext(next);
 
-		if (next >= list.length) next = 0;  //cycle back to start of the circle
-		players[num].passSword(next);
+			if (next >= list.length) next = 0;  //cycle back to start of the circle
+			players[num].passSword(next);
+		}
+
+		if(guy >= list.length-1){  // next guy on list or back to first guy
+			guy = 0;
+		}else{
+			guy++;
+		}
+
+		if (list.length === 1){  // once winner has been found
+	        let survivor = players[list[0]].player + 1;
+			console.log("Player "+ survivor + " stayed alive!");
+	        text("Player "+ survivor + " is alive!", (width/2)-40, height/2 + 20);
+			noLoop();
+		}
+
+		translate(width/2,height/2);
+		for(man of players){
+			man.show();
+		}
 	}
-
-	if(guy >= list.length-1){
-		guy = 0;
-	}else{
-		guy++;
-	}
-
-	if (list.length === 1){
-        let survivor = players[list[0]].player + 1;
-		console.log("Player "+ survivor + " stayed alive!");
-        text("Player "+ survivor + " is alive!", (width/2)-40, height/2 + 20);
-		noLoop();
-	}
-
-	translate(width/2,height/2);
-	for(man of players){
-		man.show();
-	}
-}
-
-function windowResized(){ // this might make it work in future
-	playButtonPressed();
+	tick++;
 }
 
 function setInputs(){
 	no = 0;
 	playerNum = createInput("Enter number of players!").position((windowWidth - 150)/2, 100);  // input box
-	play = createButton('Play').position((windowWidth - 40) / 2, 125);						  // play button
+	play = createButton('Play').position((windowWidth - 40) / 2, 125);						   // play button
 
+	playerNum.onClick = "this.select()";
 	play.mousePressed(playButtonPressed);
 
 }
@@ -88,7 +88,7 @@ function setGame(){
 	players = [];
 	list = [];
 
-	for(let a = 0; a < TWO_PI; a+= TWO_PI/no){
+	for(let a = 0; a < TWO_PI; a += TWO_PI/no){
 
 		let r = 150;
 		let x = r * cos(a - PI/2);
@@ -112,3 +112,5 @@ function setGame(){
 		console.log(no + " player game culled player!")
 	}
 }
+
+window.onresize = function(){ location.reload(); }  // positioning objects at page resize
